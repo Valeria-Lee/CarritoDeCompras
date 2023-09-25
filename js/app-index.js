@@ -13,30 +13,29 @@ class Producto extends Item {
     }
 }
 
-function agregarProduccto(producto) {
+function agregarProduccto(Producto) {
     if (!carritoProductos) {
-        carritoProductos = new List (new Item(producto)); //crear carrito
+        carritoProductos = new List(new Item(Producto));
     } 
-    carritoProductos.push(producto);
-    actualizarCarrito();
+    carritoProductos.append(Producto);
+    console.log("este es carritoProductos: " + carritoProductos)
+    actualizarCarrito(carritoProductos);
 }
 
 function actualizarCarrito(){
-    carrito.innerHTML = ""; 
-    let total = 0;
+    let total = 0
 
-    for (const producto of carritoProductos) {
-        const productoElement = document.createElement("div");
-        productoElement.classList.add("producto-carrito");
-        productoElement.innerHTML = `
-            <p>${producto.titulo}</p>
-            <p>Cantidad: ${producto.cantidad}</p>
-        `;
-       ;
-
-    carrito.appendChild(productoElement);
+    for (const Producto of carritoProductos) {
+        carritoProductos.append(Producto)
+        total = total + Producto.precio
     }
+
+    const cantidadCarrito = document.createElement(p)
+    cantidadCarrito.innerHTML = `Tienes ${carritoProductos.size()} en tu carrito.`
+    const costoCarrito = document.createElement(p)
+    costoCarrito.innerHTML = `El costo total de tu carrito es ${total}.00$`
 }
+
 // crear los productos.
 const headphone_1 = new Producto("headphones 1", "headphones", 1200)
 const headphone_2 = new Producto("headphones 2", "headphones", 240)
@@ -51,6 +50,7 @@ const pico8 = new Producto("pico-8", "software", 400)
 // añadir los productos a la lista de productos.
 const productosDisponibles = new List(headphone_1, headphone_2, headphone_3, headphone_4, keyboard_1, keyboard_2, keyboard_3, aseprite, pico8)
 
+// el displayProducto igual nos puede servir para el carrito solo que al carrito habría que añadirle un botón para eliminar.
 function displayProducto(Producto) {
     const card = document.createElement("div")
     card.innerHTML = `<div class="card">
@@ -59,7 +59,7 @@ function displayProducto(Producto) {
     <h4 class="categoria">${Producto.categoria}</h4>
     <h4 class="precio">${Producto.precio}$</h4>
     <h3 class="cantidad">${Producto.cantidad}</h3>
-    <button class="añadir" onclick="crearCarrito(producto)">Añadir producto</button>
+    <button class="añadir" onclick="agregarProducto(${Producto})">Añadir producto</button>
     </div>`
     carritoDisplay.append(card)
 }
