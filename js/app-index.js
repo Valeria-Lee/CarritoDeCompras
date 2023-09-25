@@ -1,16 +1,34 @@
-import {List, Item} from 'https://esm.sh/linked-list@3'
+//import {List, Item} from 'https://esm.sh/linked-list@3'
 
-const contenedor = document.getElementById("container")
-const productCard = document.querySelector(".card")
 const carritoDisplay = document.getElementById("carritoDisplay")
 
 console.log("hola")
 
 class Producto {
-    constructor(titulo, categoria, precio, cantidad){
+    constructor(titulo, categoria, precio, cantidad=0){
         this.titulo = titulo
         this.categoria = categoria
         this.precio = precio
         this.cantidad = cantidad
     }
 }
+
+// crear los productos.
+const headphone_1 = new Producto("headphones", "headphones", 20)
+const headphone_2 = new Producto("headephones", "headphones", 40)
+
+function displayProducto(Producto) {
+    const card = document.createElement("div")
+    card.innerHTML = `<div class="card">
+    <img class="imagen" src="img/productos/headphones/headphones_1.png">
+    <h2 class="titulo">${Producto.titulo}</h2>
+    <h4 class="categoria">${Producto.categoria}</h4>
+    <h4 class="precio">${Producto.precio}$</h4>
+    <input type="number" class="cantidad" min="1" max="10">
+    <button class="añadir" onclick="crearCarrito(producto)">Añadir producto</button>
+    </div>`
+    carritoDisplay.append(card)
+}
+
+displayProducto(headphone_1)
+displayProducto(headphone_2)
