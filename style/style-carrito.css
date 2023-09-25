@@ -18,16 +18,6 @@ header {
     text-align: center;
 }
 
-.page {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    height: 80vh;
-    width: 100%;
-}
-
 li {
     display:inline-block;
     min-width: 20vh;
@@ -47,46 +37,24 @@ a {
     color:white;
 }
 
-.text {
-    width: 100%;
-}
-
-p {
-    font-size: 4vw;
-}
-
-.container {
-    width: 100%;
-    align-items: center;
-}
-
-#carritoDisplay {
+.page {
     display: flex;
     flex-wrap: wrap;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 2rem;
-    justify-content: center;
     align-items: center;
+    text-align: center;
+    justify-content: center;
+    height: 80vh;
+    width: 100%;
 }
 
-#productos-titulo {
+#titulo {
     font-family: 'Sono', sans-serif;
-    font-size: 8vw;
+    font-size: 2.6rem;
     color: #023D0F;
 }
 
-.card {
-    border: 2px solid #aaaaaa;
-    margin:1vw;
-    min-width: 34vh;
-    max-width: 50vh;
-    padding: 2%;
-    font-size: 4vh;
-}
-
-.imagen {
-    width: 30vh;
-    max-width: 44vh;
+span {
+    margin: 2vw;
 }
 
 button {
@@ -96,12 +64,4 @@ button {
     width: 18vh;
     font-size: 4vh;
     margin:2vh;
-}
-
-.titulo {
-    color: #023D0F;
-}
-
-.categoria {
-    text-decoration: none;
 }
