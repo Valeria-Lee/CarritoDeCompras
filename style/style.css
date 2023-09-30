@@ -1,3 +1,12 @@
+#nombre-tienda {
+    background-color: #00352f;
+    color: rgb(255, 255, 255); 
+    font-size: 30px;
+   
+    padding: 10px; 
+    text-align: center; 
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -13,5 +22,30 @@ body {
 }
 
 h1 {
-    color:darkolivegreen;
+    color:rgb(0, 134, 67);
+    font-size: 50px;
+    text-align: center; 
+}
+
+#main {
+    float: left;
+    width: 70%; 
+    background-color: #eff5f9;
+    
+}
+#main, #side {
+    max-height: 600px; 
+    overflow-y: auto; 
+}
+
+#side {
+    float: right;
+    width: 30%; 
+    background-color:  #ffffff;
+}
+
+#productosContenedor {
+    column-count: 3;
+    font-size: 18px;
+    column-gap: 20px; 
 }
