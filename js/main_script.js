@@ -5,6 +5,9 @@ let productosDisponibles = new ListaSimplementeEnlazada()
 const productosContenedor = document.getElementById("productosContenedor")
 let productosCarrito = new ListaSimplementeEnlazada()
 const carritoContenedor = document.getElementById("carritoContenedor")
+const infoCarrito = document.getElementById("infoCarrito")
+let cantidadCarrito
+let costoCarrito
 
 class Producto extends Nodo {
     constructor(dato, titulo, categoria, precio, cantidad=0){
@@ -67,6 +70,8 @@ añadirBtns.forEach(element => {
         let titulo
         let categoria
         let precio
+        let cantidad
+        let currentCantidad
         const card = e.target.closest(".card")
 
         if (card){
@@ -76,6 +81,10 @@ añadirBtns.forEach(element => {
             console.log(precio)
         }
 
+        cantidad = card.querySelector(".cantidad")
+        currentCantidad = parseFloat(cantidad.innerHTML) + 1
+        cantidad.innerHTML = currentCantidad
+        
         const productoSeleccionado = new Producto(titulo, titulo, categoria, precio)
         añadirProducto(productoSeleccionado)
     })
@@ -83,7 +92,6 @@ añadirBtns.forEach(element => {
 
 function añadirProducto(Producto){
     productosCarrito.insertar(Producto)
-    onsole.log("este es carritoProductos: " + productosCarrito)
     actualizarCarrito()
 }
 
@@ -91,13 +99,32 @@ function actualizarCarrito(){
     let total = 0
 
     for (let i=0; i<productosCarrito.getLongitud; i++) {
-        total = total + productosCarrito.obtener(i).precio
+        total = total + parseFloat(productosCarrito.obtener(i).precio)
+        displayCarrito(productosCarrito.obtener(i))
     }
 
-    const cantidadCarrito = document.createElement(p)
-    cantidadCarrito.innerHTML = `Tienes ${carritoProductos.size()} en tu carrito.`
+    if (cantidadCarrito == undefined && costoCarrito == undefined){
+        cantidadCarrito = document.createElement('p')
+        costoCarrito = document.createElement('p')
+    } else {
+        costoCarrito.innerHTML = ''
+        cantidadCarrito.innerHTML = ''
+    }
+
+    cantidadCarrito.innerHTML = `Tienes ${productosCarrito.getLongitud} producto(s) en tu carrito.`
     infoCarrito.appendChild(cantidadCarrito)
-    const costoCarrito = document.createElement(p)
     costoCarrito.innerHTML = `El costo total de tu carrito es ${total}.00$`
     infoCarrito.appendChild(costoCarrito)
+}
+
+function displayCarrito(Producto){
+    const card = document.createElement("div")
+    card.innerHTML = `<div class="card">
+    <img class="imagen" src="../img/productos/headphones/headphones_1.png">
+    <h2 class="titulo">${Producto.titulo}</h2>
+    <h4 class="categoria">${Producto.categoria}</h4>
+    <h4 class="precio">${Producto.precio}$</h4>
+    <button class="eliminar">Eliminar producto</button>
+    </div>`
+    carritoContenedor.appendChild(card)
 }
