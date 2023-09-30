@@ -117,7 +117,7 @@ function actualizarCarrito(){
     infoCarrito.appendChild(costoCarrito)
 }
 
-function displayCarrito(Producto){
+/*function displayCarrito(Producto){
     const card = document.createElement("div")
     card.innerHTML = `<div class="card">
     <img class="imagen" src="../img/productos/headphones/headphones_1.png">
@@ -127,4 +127,50 @@ function displayCarrito(Producto){
     <button class="eliminar">Eliminar producto</button>
     </div>`
     carritoContenedor.appendChild(card)
-}
+}*/
+
+  function displayCarrito(Producto, indice) {
+    const card = document.createElement("div");
+    card.innerHTML = `<div class="card">
+      <img class="imagen" src="../img/productos/headphones/headphones_1.png">
+      <h2 class="titulo">${Producto.titulo}</h2>
+      <h4 class="categoria">${Producto.categoria}</h4>
+      <h4 class="precio">${Producto.precio}$</h4>
+      <button class="eliminar" data-indice="${indice}">Eliminar producto</button>
+    </div>`;
+    carritoContenedor.appendChild(card);
+  
+    // Agrega un controlador de eventos para el botón "Eliminar producto"
+    const eliminarBtn = card.querySelector(".eliminar");
+    eliminarBtn.addEventListener("click", (e) => {
+      const indice = e.target.getAttribute("data-indice");
+      productosCarrito.eliminarPorIndice(indice); // Llama al método para eliminar por índice
+      carritoContenedor.removeChild(card); // Elimina la tarjeta del producto de la vista
+      actualizarCarrito(); // Actualiza la información del carrito
+      // También resta 1 a la cantidad disponible del producto en productosDisponibles
+      const productoAEliminar = productosCarrito.obtener(indice);
+      const productoDisponible = productosDisponibles.obtenerPorTitulo(productoAEliminar.titulo);
+      if (productoDisponible) {
+        productoDisponible.cantidad -= 1;
+        actualizarProductosDisponibles();
+      }
+    });
+  }
+  
+  // Actualizar la cantidad disponible de productos en la vista
+  function actualizarProductosDisponibles() {
+    for (let i = 0; i < productosDisponibles.getLongitud; i++) {
+      const producto = productosDisponibles.obtener(i);
+      const cantidadElement = document.querySelector(`.card[data-titulo="${producto.titulo}"] .cantidad`);
+      if (cantidadElement) {
+        cantidadElement.textContent = `Disponibles: ${producto.cantidad}`;
+      }
+    }
+  }
+
+const vaciarBtn = document.getElementById("vaciarBtn");
+vaciarBtn.addEventListener("click", () => {
+  productosCarrito.vaciarCarrito(); // Llama al método para vaciar el carrito
+  carritoContenedor.innerHTML = ''; // Limpia la vista del carrito en la interfaz
+  actualizarCarrito(); // Actualiza la información del carrito.
+});
