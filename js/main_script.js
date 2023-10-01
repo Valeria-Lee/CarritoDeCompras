@@ -19,18 +19,16 @@ class Producto extends Nodo {
     }
 }
 
-// declarar los productos.
-const headphone_1 = new Producto("headphones #1", "headphones #1", "audio", 1200)
-const headphone_2 = new Producto("headphones #2", "headphones #2", "audio", 240)
-const headphone_3 = new Producto("headphones #3", "headphones #3", "audio", 400)
-const headphone_4 = new Producto("headphones #4", "headphones #4", "audio", 900)
-const keyboard_1 = new Producto("keyboard #1", "keyboard #1", "laptop", 800)
-const keyboard_2 = new Producto("keyboard #2", "keyboard #2", "laptop", 600)
-const keyboard_3 = new Producto("keyboard #3", "keyboard #3", "laptop", 750)
+const headphone_1 = new Producto("headphones-1", "headphones-1", "audio", 1200)
+const headphone_2 = new Producto("headphones-2", "headphones-2", "audio", 240)
+const headphone_3 = new Producto("headphones-3", "headphones-3", "audio", 400)
+const headphone_4 = new Producto("headphones-4", "headphones-4", "audio", 900)
+const keyboard_1 = new Producto("keyboard-1", "keyboard-1", "laptop", 800)
+const keyboard_2 = new Producto("keyboard-2", "keyboard-2", "laptop", 600)
+const keyboard_3 = new Producto("keyboard-3", "keyboard-3", "laptop", 750)
 const aseprite = new Producto("aseprite", "aseprite", "software", 350)
 const pico8 = new Producto("pico-8", "pico-8", "software", 400)
 
-// insertar productos.
 productosDisponibles.insertar(headphone_1)
 productosDisponibles.insertar(headphone_2)
 productosDisponibles.insertar(headphone_3)
@@ -41,17 +39,17 @@ productosDisponibles.insertar(keyboard_3)
 productosDisponibles.insertar(aseprite)
 productosDisponibles.insertar(pico8)
 
-console.log(productosDisponibles)
+function displayProducto(producto) {
 
-function displayProducto(Producto) {
     const card = document.createElement("div")
     card.innerHTML = `<div class="card">
-    <img class="imagen" src="../img/productos/headphones/headphones_1.png">
-    <h2 class="titulo">${Producto.titulo}</h2>
-    <h4 class="categoria">${Producto.categoria}</h4>
-    <h4 class="precio">${Producto.precio}$</h4>
-    <h3 class="cantidad">${Producto.cantidad}</h3>
+    <img class="imagen" src="../img/productos/${producto.categoria}/${producto.titulo}.png">
+    <h2 class="titulo">${producto.titulo}</h2>
+    <h4 class="categoria">${producto.categoria}</h4>
+    <h4 class="precio">${producto.precio}$</h4>
+    <h3 class="cantidad">${producto.cantidad}</h3>
     <button class="añadir">Añadir producto</button>
+    <button class="eliminar">Eliminar producto</button>
     </div>`
     productosContenedor.appendChild(card)
 }
@@ -72,7 +70,7 @@ añadirBtns.forEach(element => {
         let precio
         let cantidad
         let currentCantidad
-        const card = e.target.closest(".card")
+        let card = e.target.closest(".card")
 
         if (card){
             titulo = card.querySelector(".titulo").innerHTML
@@ -85,21 +83,24 @@ añadirBtns.forEach(element => {
         currentCantidad = parseFloat(cantidad.innerHTML) + 1
         cantidad.innerHTML = currentCantidad
         
-        const productoSeleccionado = new Producto(titulo, titulo, categoria, precio)
+        let productoSeleccionado = new Producto(titulo, titulo, categoria, precio)
         añadirProducto(productoSeleccionado)
     })
 })
 
-function añadirProducto(Producto){
-    productosCarrito.insertar(Producto)
+function añadirProducto(producto){
+    productosCarrito.insertar(producto)
     actualizarCarrito()
 }
 
 function actualizarCarrito(){
     let total = 0
+    carritoContenedor.innerHTML = ''
 
     for (let i=0; i<productosCarrito.getLongitud; i++) {
-        total = total + parseFloat(productosCarrito.obtener(i).precio)
+        if(total >= 0){
+            total = total + parseFloat(productosCarrito.obtener(i).precio)
+        }
         displayCarrito(productosCarrito.obtener(i))
     }
 
@@ -117,60 +118,65 @@ function actualizarCarrito(){
     infoCarrito.appendChild(costoCarrito)
 }
 
-/*function displayCarrito(Producto){
-    const card = document.createElement("div")
-    card.innerHTML = `<div class="card">
-    <img class="imagen" src="../img/productos/headphones/headphones_1.png">
-    <h2 class="titulo">${Producto.titulo}</h2>
-    <h4 class="categoria">${Producto.categoria}</h4>
-    <h4 class="precio">${Producto.precio}$</h4>
-    <button class="eliminar">Eliminar producto</button>
-    </div>`
-    carritoContenedor.appendChild(card)
-}*/
-
-  function displayCarrito(Producto, indice) {
+function displayCarrito(producto, indice) {
     const card = document.createElement("div");
     card.innerHTML = `<div class="card">
-      <img class="imagen" src="../img/productos/headphones/headphones_1.png">
-      <h2 class="titulo">${Producto.titulo}</h2>
-      <h4 class="categoria">${Producto.categoria}</h4>
-      <h4 class="precio">${Producto.precio}$</h4>
-      <button class="eliminar" data-indice="${indice}">Eliminar producto</button>
+      <img class="imagen" src="../img/productos/${producto.categoria}/${producto.titulo}.png">
+      <h2 class="titulo">${producto.titulo}</h2>
+      <h4 class="categoria">${producto.categoria}</h4>
+      <h4 class="precio">${producto.precio}$</h4>
     </div>`;
     carritoContenedor.appendChild(card);
-  
-    // Agrega un controlador de eventos para el botón "Eliminar producto"
-    const eliminarBtn = card.querySelector(".eliminar");
-    eliminarBtn.addEventListener("click", (e) => {
-      const indice = e.target.getAttribute("data-indice");
-      productosCarrito.eliminarPorIndice(indice); // Llama al método para eliminar por índice
-      carritoContenedor.removeChild(card); // Elimina la tarjeta del producto de la vista
-      actualizarCarrito(); // Actualiza la información del carrito
-      // También resta 1 a la cantidad disponible del producto en productosDisponibles
-      const productoAEliminar = productosCarrito.obtener(indice);
-      const productoDisponible = productosDisponibles.obtenerPorTitulo(productoAEliminar.titulo);
-      if (productoDisponible) {
-        productoDisponible.cantidad -= 1;
-        actualizarProductosDisponibles();
-      }
-    });
-  }
-  
-  // Actualizar la cantidad disponible de productos en la vista
-  function actualizarProductosDisponibles() {
-    for (let i = 0; i < productosDisponibles.getLongitud; i++) {
-      const producto = productosDisponibles.obtener(i);
-      const cantidadElement = document.querySelector(`.card[data-titulo="${producto.titulo}"] .cantidad`);
-      if (cantidadElement) {
-        cantidadElement.textContent = `Disponibles: ${producto.cantidad}`;
-      }
-    }
-  }
+}
+
+const eliminarBtns = document.querySelectorAll(".eliminar");
+    eliminarBtns.forEach(element => {
+    element.addEventListener("click", (e) => {
+        console.log("eliminar!")
+        let titulo
+        let categoria
+        let precio
+        let cantidad
+        let currentCantidad
+
+        let cardEliminar = e.target.closest(".card")
+        console.log(cardEliminar)
+
+        if (cardEliminar){
+            titulo = cardEliminar.querySelector(".titulo").innerHTML
+            categoria = cardEliminar.querySelector(".categoria").innerHTML
+            precio = cardEliminar.querySelector(".precio").innerHTML
+        }
+
+        cantidad = cardEliminar.querySelector(".cantidad")
+        if(cantidad > 0){
+            currentCantidad = parseFloat(cantidad.innerHTML) - 1
+        } else {
+            currentCantidad = 0
+        }
+        cantidad.innerHTML = currentCantidad
+
+        let productoEliminado = new Producto(titulo, titulo, categoria, precio)
+        console.log(productoEliminado)
+        
+        for(let j=0;j<productosCarrito.getLongitud;j++){
+            if(productosCarrito.obtener(j).getDato == productoEliminado.titulo){
+                productosCarrito.eliminar(j)
+                break
+            }
+        }
+
+        actualizarCarrito()
+    })
+})
 
 const vaciarBtn = document.getElementById("vaciarBtn");
 vaciarBtn.addEventListener("click", () => {
-  productosCarrito.vaciarCarrito(); // Llama al método para vaciar el carrito
-  carritoContenedor.innerHTML = ''; // Limpia la vista del carrito en la interfaz
-  actualizarCarrito(); // Actualiza la información del carrito.
-});
+    const cantidadElements = document.querySelectorAll(".cantidad")
+    cantidadElements.forEach(element => {
+        element.innerHTML = 0
+    })
+    productosCarrito.vaciarCarrito()
+    carritoContenedor.innerHTML = ''
+    actualizarCarrito()
+})

@@ -1,16 +1,17 @@
-#nombre-tienda {
+#header {
     background-color: #00352f;
     color: rgb(255, 255, 255); 
-    font-size: 30px;
-   
-    padding: 10px; 
+    font-size: 5vw;
+    padding: 2vw; 
     text-align: center; 
+    justify-content: center;
+    align-items: center;
 }
 
 * {
     margin: 0;
     padding: 0;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+    font-family: 'Young Serif', serif;
 }
 
 body {
@@ -23,7 +24,7 @@ body {
 
 h1 {
     color:rgb(0, 134, 67);
-    font-size: 50px;
+    font-size: 4vw;
     text-align: center; 
 }
 
@@ -48,4 +49,24 @@ h1 {
     column-count: 3;
     font-size: 18px;
     column-gap: 20px; 
+}
+
+button {
+    border-color:#020202;
+    color: white;
+    background-color: #023D0F;
+    width: 18vh;
+    font-size: 3vh;
+    margin:1vh;
+    padding: 0.2vw;
+}
+
+.imagen {
+    width: 30vh;
+    max-width: 44vh;
+}
+
+#logito {
+    width: 5vh;
+    max-width: 10vh;
 }

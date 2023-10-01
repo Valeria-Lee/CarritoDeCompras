@@ -65,30 +65,29 @@ class ListaSimplementeEnlazada {
     return this._longitud
   }
 
- vaciarCarrito() {
-  this._frente = null;
-  this._longitud = 0;
-  this._atras = null;
-}
-
-
-eliminarPorIndice(indice) {
-  if (indice < 0 || indice >= this._longitud) {
-    console.log("Indice fuera de rango");
-    return;
-  }
-  if (indice === 0) {
-    this._frente = this._frente.getSiguiente;
-  } else {
-    let nodoAnterior = this._frente;
-    for (let i = 0; i < indice - 1; i++) {
-      nodoAnterior = nodoAnterior.getSiguiente;
+  eliminarPorIndice(indice) {
+    if (indice < 0 || indice >= this._longitud) {
+      console.log("Indice fuera de rango");
+      return;
     }
-    let nodoEliminar = nodoAnterior.getSiguiente;
-    nodoAnterior.setSiguiente = nodoEliminar.getSiguiente;
+    if (indice === 0) {
+      this._frente = this._frente.getSiguiente;
+    } else {
+      let nodoAnterior = this._frente;
+      for (let i = 0; i < indice - 1; i++) {
+        nodoAnterior = nodoAnterior.getSiguiente;
+      }
+      let nodoEliminar = nodoAnterior.getSiguiente;
+      nodoAnterior.setSiguiente = nodoEliminar.getSiguiente;
+    }
+    this._longitud -= 1;
   }
-  this._longitud -= 1;
-}
+  
+  vaciarCarrito() {
+    this._frente = null;
+    this._longitud = 0;
+    this._atras = null;
+  }
 }
 
 export default ListaSimplementeEnlazada
