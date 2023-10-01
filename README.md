@@ -5,7 +5,7 @@ Un simulador de carrito de compras inspirado en una lista simplemente enlazada.
 - [Descripción](#descripción)
 - [Instalación](#instalación)
 - [Funciones](#funciones)
-- [Tech Stack](#techstack)
+- [Tech Stack](#tech_stack)
 
 ### Descripción
 Este es un proyecto con el fin de implementar una estructura de datos en una problemática real. La estructura de nuestra elección fue la lista simplemente enlazada y su implementación fue mediante de un carrito de compras.
