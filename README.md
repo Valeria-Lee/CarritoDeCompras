@@ -6,6 +6,7 @@ Un simulador de carrito de compras inspirado en una lista simplemente enlazada.
 - [Instalación](#instalación)
 - [Funciones](#funciones)
 - [Tech](#tech)
+- [Autores](#autores)
 
 ### Descripción
 Este es un proyecto con el fin de implementar una estructura de datos en una problemática real. La estructura de nuestra elección fue la lista simplemente enlazada y su implementación fue mediante de un carrito de compras.
@@ -29,3 +30,8 @@ CarritoDeCompras/pages
 
 ### Tech
 **Client:** HTML, CSS y Javascript.
+
+### Autores.
+- [Fernando Reyes](https://github.com/STAIN20)
+- [Raul Sosa](https://github.com/raul0ff52)
+- [Valeria Lee](https://github.com/Valeria-Lee)
